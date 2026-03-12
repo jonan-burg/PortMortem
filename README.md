@@ -1,10 +1,10 @@
-# PortMortem 🔍
+# PortMortem
 
 **A port scanning and CVE risk assessment tool built on Nmap and the National Vulnerability Database.**
 
 ---
 
-PortMortem scans a target machine or network, fingerprints the services running on open ports, and checks each one against known CVEs. The result is a prioritized risk report — so instead of staring at raw Nmap output, you get a clear picture of what's actually exposed and how bad it is.
+PortMortem scans a target machine or network, fingerprints the services running on open ports, and checks each one against known CVEs. The result is a prioritized risk report - so instead of staring at raw Nmap output, you get a clear picture of what's actually exposed and how bad it is.
 
 ---
 
@@ -21,11 +21,11 @@ PortMortem scans a target machine or network, fingerprints the services running 
 ## Stack
 
 - **Python 3.10+**
-- **Nmap** — scanning engine
-- **python-nmap** — Python wrapper around Nmap
-- **NVD REST API v2.0** — CVE + CVSS data
-- **Rich** — terminal output formatting
-- **Requests** — HTTP
+- **Nmap** - scanning engine
+- **python-nmap** - Python wrapper around Nmap
+- **NVD REST API v2.0** - CVE + CVSS data
+- **Rich** - terminal output formatting
+- **Requests** - HTTP
 
 ---
 
@@ -85,7 +85,7 @@ python main.py --target 192.168.1.1 --report
 
 **Sample output:**
 ```
-PortMortem — starting scan on 192.168.1.1
+PortMortem - starting scan on 192.168.1.1
 
   PORT    SERVICE    VERSION       CVEs    SEVERITY
   22      OpenSSH    7.4           12      HIGH
@@ -135,4 +135,4 @@ Only scan systems you own or have explicit permission to test. Unauthorized scan
 
 ## Author
 
-[Your Name] — built as a student project exploring network security and vulnerability assessment.
+Johan J.V. - built as a student project exploring network security and vulnerability assessment.
