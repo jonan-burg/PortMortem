@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="PortMortem Logo" width="180"/>
+  <img src="assets/logo.png" alt="PortMortem Logo" width="250"/>
 </p>
 
 <h1 align="center">PortMortem</h1>
@@ -20,7 +20,7 @@
 
 ## What it does
 
-PortMortem scans a target machine or network, fingerprints the services running on open ports, and checks each one against known CVEs from the NVD. The result is a prioritized risk report — instead of raw Nmap output, you get a clear picture of what's exposed and how dangerous it actually is.
+PortMortem scans a target machine or network, fingerprints the services running on open ports, and checks each one against known CVEs from the NVD. The result is a prioritized risk report; instead of raw Nmap output, you get a clear picture of what's exposed and how dangerous it actually is.
 
 ---
 
@@ -150,4 +150,4 @@ Only scan systems you own or have explicit permission to test. Unauthorized scan
 
 ## Author
 
-[Your Name] — built as a student project exploring network security and vulnerability assessment.
+Johan J.V. - built as a student project exploring network security and vulnerability assessment.
