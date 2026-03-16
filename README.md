@@ -1,31 +1,57 @@
-# PortMortem
+<p align="center">
+  <img src="assets/logo.png" alt="PortMortem Logo" width="180"/>
+</p>
 
-**A port scanning and CVE risk assessment tool built on Nmap and the National Vulnerability Database.**
+<h1 align="center">PortMortem</h1>
+<p align="center">
+  <b>Network vulnerability scanner powered by Nmap and the National Vulnerability Database.</b><br/>
+  <sub>Scan. Detect. Score. Report.</sub>
+</p>
 
----
-
-PortMortem scans a target machine or network, fingerprints the services running on open ports, and checks each one against known CVEs. The result is a prioritized risk report - so instead of staring at raw Nmap output, you get a clear picture of what's actually exposed and how bad it is.
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3.10+-blue?style=flat-square&logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/platform-Kali%20Linux-blue?style=flat-square&logo=linux&logoColor=white"/>
+  <img src="https://img.shields.io/badge/data-NVD%20API%20v2-orange?style=flat-square"/>
+  <img src="https://img.shields.io/badge/scanner-Nmap-red?style=flat-square"/>
+  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square"/>
+</p>
 
 ---
 
 ## What it does
 
-- Runs an Nmap `-sV` scan to detect open ports and service versions
-- Looks up each service against the NVD API for known CVEs
-- Scores findings by CVSS severity (Critical → Low)
-- Prints a color-coded summary table in the terminal
-- Exports a standalone HTML report to the `reports/` folder
+PortMortem scans a target machine or network, fingerprints the services running on open ports, and checks each one against known CVEs from the NVD. The result is a prioritized risk report — instead of raw Nmap output, you get a clear picture of what's exposed and how dangerous it actually is.
+
+---
+
+## Features
+
+- Auto-detects your local gateway IP on launch
+- Nmap `-sV` scan to detect open ports and service versions
+- Live CVE lookups via NVD REST API v2.0
+- CVSS v3 risk scoring per service and overall
+- Dark terminal-style GUI built with Tkinter
+  - Segmented pulse bar that fills and color-shifts with scan severity
+  - Live scrolling scan log with color-coded severity output
+  - Expandable results tree — click any row to see individual CVEs
+  - Clickable CVE IDs — opens the NVD detail page in your browser
+  - Scan history dropdown — retains the last 5 scans with full log and results
+  - Per-scan HTML export from both current scan and history
+- Standalone HTML report with clickable CVE links
 
 ---
 
 ## Stack
 
-- **Python 3.10+**
-- **Nmap** - scanning engine
-- **python-nmap** - Python wrapper around Nmap
-- **NVD REST API v2.0** - CVE + CVSS data
-- **Rich** - terminal output formatting
-- **Requests** - HTTP
+| Tool | Purpose |
+|------|---------|
+| Python 3.10+ | Core language |
+| Nmap | Scanning engine |
+| python-nmap | Python wrapper for Nmap |
+| NVD REST API v2.0 | CVE + CVSS data |
+| Tkinter | Desktop GUI |
+| Rich | Terminal output formatting |
+| Requests | HTTP calls |
 
 ---
 
@@ -33,38 +59,36 @@ PortMortem scans a target machine or network, fingerprints the services running 
 
 ```
 portmortem/
-├── main.py          # entry point
-├── scanner.py       # nmap wrapper + parser
-├── nvd_client.py    # nvd api calls
-├── scorer.py        # cvss scoring logic
-├── reporter.py      # terminal + html output
+├── main.py          # CLI entry point
+├── gui.py           # Tkinter GUI entry point
+├── scanner.py       # Nmap wrapper + parser
+├── nvd_client.py    # NVD API integration
+├── scorer.py        # CVSS risk scoring logic
+├── reporter.py      # HTML report generator
+├── assets/
+│   └── logo.png     # Project logo
+├── reports/         # Generated HTML reports (git-ignored)
 ├── requirements.txt
-├── .env             # put your NVD_API_KEY here
-└── reports/         # generated html reports land here
+├── .env             # NVD_API_KEY (git-ignored)
+└── .gitignore
 ```
 
 ---
 
 ## Setup
 
-You'll need Nmap installed and a free NVD API key.
+**Prerequisites:** Python 3.10+, Nmap, a free NVD API key.
 
-**Get an NVD API key:** https://nvd.nist.gov/developers/request-an-api-key
+Get an NVD API key: https://nvd.nist.gov/developers/request-an-api-key
 
-**Install Nmap:**
 ```bash
-sudo apt install nmap      # Debian/Ubuntu
-brew install nmap          # macOS
-# Windows: https://nmap.org/download.html
-```
+# Install Nmap (Kali has it by default)
+sudo apt install nmap
 
-**Install Python dependencies:**
-```bash
+# Install Python dependencies
 pip install -r requirements.txt
-```
 
-**Add your API key:**
-```bash
+# Add your NVD API key
 echo "NVD_API_KEY=your_key_here" > .env
 ```
 
@@ -72,51 +96,37 @@ echo "NVD_API_KEY=your_key_here" > .env
 
 ## Usage
 
+**GUI (recommended):**
 ```bash
-# scan a single host
-python main.py --target 192.168.1.1
-
-# scan a subnet
-python main.py --target 192.168.1.0/24
-
-# save an HTML report
-python main.py --target 192.168.1.1 --report
+sudo python3 gui.py
 ```
 
-**Sample output:**
-```
-PortMortem - starting scan on 192.168.1.1
-
-  PORT    SERVICE    VERSION       CVEs    SEVERITY
-  22      OpenSSH    7.4           12      HIGH
-  80      Apache     2.4.29        8       MEDIUM
-  443     OpenSSL    1.0.2k        21      CRITICAL
-  3306    MySQL      5.7.31        3       LOW
-
-  Overall risk score: 7.8 / 10
-  Report saved → reports/20240115_192.168.1.1.html
+**CLI:**
+```bash
+sudo python3 main.py --target 192.168.1.1
+sudo python3 main.py --target 192.168.1.0/24 --report
 ```
 
 ---
 
 ## Scoring
 
-CVSS v3 base scores from the NVD, bucketed as:
+CVSS v3 base scores from the NVD:
 
-| Score     | Label    |
-|-----------|----------|
-| 9.0–10.0  | Critical |
-| 7.0–8.9   | High     |
-| 4.0–6.9   | Medium   |
-| 0.1–3.9   | Low      |
+| Score | Label |
+|-------|-------|
+| 9.0 – 10.0 | Critical |
+| 7.0 – 8.9  | High |
+| 4.0 – 6.9  | Medium |
+| 0.1 – 3.9  | Low |
 
-The overall score is a weighted average of the top CVEs found across all services.
+The overall score is a weighted average of the top CVEs found across all scanned services.
 
 ---
 
 ## Disclaimer
 
-Only scan systems you own or have explicit permission to test. Unauthorized scanning is illegal in most places. This tool is for educational and authorized use only.
+Only scan systems you own or have explicit permission to test. Unauthorized scanning is illegal in most jurisdictions. This tool is for educational and authorized use only.
 
 ---
 
@@ -125,14 +135,19 @@ Only scan systems you own or have explicit permission to test. Unauthorized scan
 - [x] Nmap scanning + version detection
 - [x] NVD CVE lookup
 - [x] CVSS risk scoring
-- [x] Terminal report + HTML export
-- [ ] JSON output
-- [ ] Scan diffing (detect changes between runs)
-- [ ] Email delivery for reports
-- [ ] Simple web UI
+- [x] CLI report + HTML export
+- [x] Tkinter GUI with live scan log
+- [x] Segmented pulse bar indicator
+- [x] Scan history with dropdown navigation
+- [x] Clickable CVE IDs → NVD browser
+- [x] Auto gateway detection
+- [ ] JSON export
+- [ ] Scan diff — detect changes between runs
+- [ ] Email report delivery
+- [ ] Web dashboard
 
 ---
 
 ## Author
 
-Johan J.V. - built as a student project exploring network security and vulnerability assessment.
+[Your Name] — built as a student project exploring network security and vulnerability assessment.
