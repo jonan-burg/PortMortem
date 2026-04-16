@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="PortMortem Logo" width="250"/>
+  <img src="assets/logo.png" alt="PortMortem Charlie" width="250"/>
 </p>
 
 <h1 align="center">PortMortem</h1>
@@ -18,6 +18,11 @@
 
 ---
 
+## Charlie
+> "Meet **Charlie**, the digital coroner behind **PortMortem**. Developed as a 'Forensic-First' utility for the modern web, PortMortem doesn't just scan networks; it performs a full digital autopsy. By executing deep Nmap incisions and cross-referencing service 'DNA' with the National Vulnerability Database, Charlie identifies the exact 'toxins' (CVEs) threatening a system's health. With a retro-inspired interface and a penchant for identifying 'Dead on Arrival' configurations, Charlie provides a color-coded post-mortem report and a definitive risk score, ensuring you read the obituary of a vulnerability before it becomes a reality for your infrastructure."
+
+---
+
 ## What it does
 
 PortMortem scans a target machine or network, fingerprints the services running on open ports, and checks each one against known CVEs from the NVD. The result is a prioritized risk report; instead of raw Nmap output, you get a clear picture of what's exposed and how dangerous it actually is.
@@ -26,18 +31,17 @@ PortMortem scans a target machine or network, fingerprints the services running 
 
 ## Features
 
-- Auto-detects your local gateway IP on launch
-- Nmap `-sV` scan to detect open ports and service versions
-- Live CVE lookups via NVD REST API v2.0
-- CVSS v3 risk scoring per service and overall
-- Dark terminal-style GUI built with Tkinter
-  - Segmented pulse bar that fills and color-shifts with scan severity
-  - Live scrolling scan log with color-coded severity output
-  - Expandable results tree — click any row to see individual CVEs
-  - Clickable CVE IDs — opens the NVD detail page in your browser
-  - Scan history dropdown — retains the last 5 scans with full log and results
-  - Per-scan HTML export from both current scan and history
-- Standalone HTML report with clickable CVE links
+- **Auto-Discovery:** Detects your local gateway IP on launch.
+- **Deep Incision:** Nmap `-sV` scan to detect open ports and service versions.
+- **Toxicology Report:** Live CVE lookups via NVD REST API v2.0.
+- **The Verdict:** CVSS v3 risk scoring per service and overall.
+- **Retro-Modern GUI:** Dark terminal-style interface built with Tkinter.
+  - **Vital Signs:** Segmented pulse bar that fills and color-shifts with scan severity.
+  - **Autopsy Log:** Live scrolling scan log with color-coded severity output.
+  - **Interactive Results:** Expandable tree view—click any row to see individual CVEs.
+  - **External Links:** Clickable CVE IDs—opens the NVD detail page in your browser.
+  - **Archive:** Scan history dropdown—retains the last 5 scans with full logs.
+  - **Formal Reporting:** Per-scan HTML export from both current scan and history.
 
 ---
 
@@ -45,13 +49,13 @@ PortMortem scans a target machine or network, fingerprints the services running 
 
 | Tool | Purpose |
 |------|---------|
-| Python 3.10+ | Core language |
-| Nmap | Scanning engine |
-| python-nmap | Python wrapper for Nmap |
-| NVD REST API v2.0 | CVE + CVSS data |
-| Tkinter | Desktop GUI |
-| Rich | Terminal output formatting |
-| Requests | HTTP calls |
+| **Python 3.10+** | Core language |
+| **Nmap** | Scanning engine |
+| **python-nmap** | Python wrapper for Nmap |
+| **NVD REST API v2.0** | CVE + CVSS data source |
+| **Tkinter** | Desktop GUI framework |
+| **Rich** | Terminal output formatting |
+| **Requests** | HTTP API communication |
 
 ---
 
